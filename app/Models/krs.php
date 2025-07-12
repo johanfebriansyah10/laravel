@@ -4,7 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class krs extends Model
+class Krs extends Model
 {
-    //
+    protected $fillable = [
+        'mahasiswa_id',
+        'matakuliah_id',
+        'tahun_ajaran',
+        'semester',
+    ];
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class);
+    }
+
+    public function matakuliah()
+    {
+        return $this->belongsTo(Matakuliah::class);
+    }
 }

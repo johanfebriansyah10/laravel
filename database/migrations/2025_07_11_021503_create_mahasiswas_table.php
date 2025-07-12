@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->uniqie();
             $table->string('nim', 7)->unique();
             $table->string('nama', 50);
-            $table->string('tempat_larir', 50);
+            $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
             $table->string('jenis_kelamin', 10);
             $table->string('alamat', 100);

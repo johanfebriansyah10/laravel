@@ -4,7 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class admin extends Model
+class Admin extends Model
 {
-    //
+    protected $fillable = [
+        'user_id',
+        'nama',
+        'no_hp',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
