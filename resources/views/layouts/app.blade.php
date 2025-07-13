@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -13,8 +14,13 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+            AOS.init();
+        </script>
+</script>
+
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased transition-all duration-300 ease-in-out">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
@@ -31,6 +37,10 @@
             <main>
                 {{ $slot }}
             </main>
+            <button onclick="document.documentElement.classList.toggle('dark')" class="absolute top-4 right-4 text-sm">
+                🌗 Toggle Mode
+            </button>
+
         </div>
     </body>
 </html>

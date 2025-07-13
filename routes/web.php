@@ -10,10 +10,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -32,16 +28,18 @@ Route::middleware(['auth'])->group(function (){
     })->name('dashboard');
 });
 
-Route::middleware(['auth'])->prefix('role:admin')->group(function (){
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function (){
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
 
-Route::middleware(['auth'])->prefix('role:dosen')->group(function (){
+Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->group(function (){
     Route::get('/dashboard', [DosenController::class, 'dashboard'])->name('dosen.dashboard');
 });
 
-Route::middleware(['auth'])->prefix('role:mahasiswa')->group(function (){
+Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
 });
+
+
 
 require __DIR__.'/auth.php';

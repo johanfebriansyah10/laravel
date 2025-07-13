@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('mahasiswa', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->uniqie();
+            $table->unsignedBigInteger('user_id')->unique();
             $table->string('nim', 7)->unique();
             $table->string('nama', 50);
             $table->string('tempat_lahir', 50);
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::dropIfExists('mahasiswa');
     }
 };

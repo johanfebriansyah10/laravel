@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('nidn', 7)->unique();
             $table->string('nama', 50);
             $table->string('gelar', 50)->nullable();
-            $table->string('jenis_kelamin', 10);
-            $table->string('email', 50)->uniqie();
+            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
+            $table->string('email', 50);
             $table->string('alamat', 70);
             $table->string('no_hp', 20)->nullable();
             $table->timestamps();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dosens');
+        Schema::dropIfExists('dosen');
     }
 };

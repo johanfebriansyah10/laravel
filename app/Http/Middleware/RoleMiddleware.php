@@ -19,7 +19,7 @@ class RoleMiddleware
         if(!Auth::check()) return redirect('/login');
         $user = Auth::user();
 
-        if(in_array(\Illuminate\Support\Facades\Auth::user(), $roles)){
+        if(in_array($user->role, $roles)){
             return $next($request);
         }
 
