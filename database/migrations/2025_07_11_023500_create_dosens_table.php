@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email', 50);
             $table->string('alamat', 70);
             $table->string('no_hp', 20)->nullable();
+            $table->string('foto', 50)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

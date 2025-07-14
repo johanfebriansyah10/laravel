@@ -21,32 +21,27 @@
 
     </head>
     <body class="font-sans antialiased transition-all duration-300 ease-in-out">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+ <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
+    @include('components.sidebar')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    <div class="flex-1 lg:ml-64">
+        @include('layouts.navigation')
 
-            <!-- Page Content -->
-            <main class="flex flex-col items-center justify-center py-10" data-aos="fade-up">
-                <div class="w-full max-w-3xl mb-8" data-aos="zoom-in" data-aos-delay="200">
-                    {{ $slot }}
+        @isset($header)
+            <header class="bg-white dark:bg-gray-800 shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
                 </div>
-                <button
-                    onclick="document.documentElement.classList.toggle('dark')"
-                    class="text-white bg-blue-500 hover:bg-blue-600 transition-colors rounded-xl py-5 px-8 shadow-lg flex items-center gap-2"
-                    data-aos="flip-left"
-                    data-aos-delay="400"
-                >
-                    🌗 Toggle Mode
-                </button>
-            </main>
+            </header>
+        @endisset
+
+        <main class="py-10 px-4" data-aos="fade-up">
+            <div class="w-full max-w-5xl mx-auto" data-aos="zoom-in" data-aos-delay="200">
+                @yield('register')
+            </div>
+        </main>
+    </div>
+</div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     AOS.init({
