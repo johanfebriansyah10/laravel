@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DosenController;
 
 Route::get('/', function () {
@@ -30,6 +31,11 @@ Route::middleware(['auth'])->group(function (){
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function (){
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    // Route::get('/register-user', [RegisteredUserController::class, 'create'])->name('admin.register-user');
+    // Route::post('/register-user', [RegisteredUserController::class, 'store'])->name('admin.register.store');
+    Route::get('/register-user', [AdminController::class, 'createUser'])->name('admin.register-user');
+    Route::post('/register-user', [AdminController::class, 'storeUser'])->name('admin.store-user');
+
 });
 
 Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->group(function (){

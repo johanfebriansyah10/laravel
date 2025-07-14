@@ -17,7 +17,7 @@
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
             AOS.init();
         </script>
-</script>
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     </head>
     <body class="font-sans antialiased transition-all duration-300 ease-in-out">
@@ -34,13 +34,27 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="flex flex-col items-center justify-center py-10" data-aos="fade-up">
+                <div class="w-full max-w-3xl mb-8" data-aos="zoom-in" data-aos-delay="200">
+                    {{ $slot }}
+                </div>
+                <button
+                    onclick="document.documentElement.classList.toggle('dark')"
+                    class="text-white bg-blue-500 hover:bg-blue-600 transition-colors rounded-xl py-5 px-8 shadow-lg flex items-center gap-2"
+                    data-aos="flip-left"
+                    data-aos-delay="400"
+                >
+                    🌗 Toggle Mode
+                </button>
             </main>
-            <button onclick="document.documentElement.classList.toggle('dark')" class="absolute top-4 right-4 text-sm">
-                🌗 Toggle Mode
-            </button>
-
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    AOS.init({
+                        duration: 800,
+                        once: true,
+                    });
+                });
+            </script>
         </div>
     </body>
 </html>
