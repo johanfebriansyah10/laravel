@@ -19,6 +19,7 @@ class Dosen extends Model
         'email',
         'alamat',
         'no_hp',
+        'foto',
     ];
 
     public function user()

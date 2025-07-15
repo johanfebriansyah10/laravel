@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unique();
             $table->string('nama', 50);
-            $table->string('foto', 50)->nullable();
+            $table->string('foto')->nullable();
             $table->string('no_hp', 13)->nullable();
             $table->timestamps();
 

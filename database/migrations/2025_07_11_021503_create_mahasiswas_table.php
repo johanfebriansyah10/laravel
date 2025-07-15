@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('alamat', 100);
             $table->string('prodi', 30);
             $table->string('angkatan', 4);
-            $table->string('foto', 50)->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

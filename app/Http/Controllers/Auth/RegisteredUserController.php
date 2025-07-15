@@ -37,7 +37,13 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:40', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'in:admin', 'mahasiswa', 'dosen'],
+            'foto' => ['nullable', 'image', 'mimes:jgp,jpeg,png,gif,webp,svg', 'max:2048'],
         ]);
+
+        $fotoPath = null;
+        if($request->hasFile('foto')){
+            $fotoPath = $request->file('foto')->store('photos', 'public');
+        };
 
         $user = User::create([
             'name' => $request->name,
@@ -51,6 +57,7 @@ class RegisteredUserController extends Controller
                 'user_id' => $user->id,
                 'nama' => $user->name,
                 'no_hp' => $user->no_hp,
+                'foto' => $fotoPath
             ]);
         }else if($request->role === 'mahasiswa'){
             Mahasiswa::create([
@@ -63,6 +70,7 @@ class RegisteredUserController extends Controller
                 'alamat' => $request->alamat,
                 'prodi' => $request->prodi,
                 'angkatan' => $request->angkatan,
+                'foto' => $fotoPath
             ]);
         }else if($request->role === 'dosen'){
             Dosen::create([
@@ -74,6 +82,7 @@ class RegisteredUserController extends Controller
                 'email' => $request->email,
                 'alamat' => $request->alamat,
                 'no_hp' => $request->no_hp,
+                'foto' => $fotoPath
             ]);
         }
 

@@ -7,8 +7,10 @@ use App\Models\Admin;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -32,6 +34,7 @@ class AdminController extends Controller
             'role' => ['required', 'in:admin,dosen,mahasiswa'],
             'nim' => ['nullable', 'required_if:role,mahasiswa', 'unique:mahasiswa,nim'],
             'nidn' => ['nullable', 'required_if:role,dosen', 'unique:dosen,nidn'],
+            'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,webp,svg', 'max:2048'],
 
         ]);
 
@@ -41,6 +44,11 @@ class AdminController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
+
+            $fotoPath = null;
+        if($request->hasFile('foto')){
+            $fotoPath = $request->file('foto')->store('photos', 'public');
+        };
 
         if($request->role === 'mahasiswa'){
             Mahasiswa::create([
@@ -53,6 +61,7 @@ class AdminController extends Controller
                 'jenis_kelamin' => '-',
                 'alamat' => '-',
                 'angkatan' => '2020',
+                'foto' => $fotoPath ?: null,
             ]);
         }elseif ($request->role === 'dosen') {
         Dosen::create([
@@ -64,12 +73,14 @@ class AdminController extends Controller
             'alamat' => '-',
             'gelar' => '-',
             'no_hp' => $request->no_hp ?? null,
+            'foto' => $fotoPath ?: null,
         ]);
     } elseif ($request->role === 'admin') {
         Admin::create([
             'user_id' => $user->id,
             'nama' => $user->name,
             'no_hp' => $request->no_hp ?? null,
+            'foto' => $fotoPath ?: null,
         ]);
     }
     return redirect()->route('admin.dashboard')->with('success', "User Berhasil dibuat");
@@ -86,7 +97,14 @@ public function storeAdmin(Request $request) {
         'email' => 'required|email|unique:users',
         'password' => 'required|confirmed|min:6',
         'no_hp' => 'nullable|string|max:13',
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp,svg|max:2048',
+
     ]);
+
+        $fotoPath = null;
+        if($request->hasFile('foto')){
+            $fotoPath = $request->file('foto')->store('photos', 'public');
+        };
 
     $user = User::create([
         'name' => $request->name,
@@ -99,9 +117,15 @@ public function storeAdmin(Request $request) {
         'user_id' => $user->id,
         'nama' => $user->name,
         'no_hp' => $request->no_hp,
+        'foto' => $fotoPath ?: null,
     ]);
 
-    return redirect()->route('admin.dashboard')->with('success', 'Admin berhasil dibuat');
+    dd([
+    'foto_uploaded' => $request->hasFile('foto'),
+    'foto_path' => $fotoPath,
+    'admin_created' => Admin::where('user_id', $user->id)->first()
+]);
+
 }
 
 // DOSEN
@@ -119,7 +143,12 @@ public function storeDosen(Request $request) {
         'jenis_kelamin' => 'required',
         'alamat' => 'nullable|string|max:70',
         'no_hp' => 'nullable|string|max:20',
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp,svg|max:2048',
     ]);
+        $fotoPath = null;
+        if($request->hasFile('foto')){
+            $fotoPath = $request->file('foto')->store('photos', 'public');
+        };
 
     $user = User::create([
         'name' => $request->name,
@@ -137,6 +166,7 @@ public function storeDosen(Request $request) {
         'email' => $request->email,
         'alamat' => $request->alamat,
         'no_hp' => $request->no_hp,
+        'foto' => $fotoPath,
     ]);
 
     return redirect()->route('admin.dashboard')->with('success', 'Dosen berhasil dibuat');
@@ -159,7 +189,13 @@ public function storeMahasiswa(Request $request) {
         'alamat' => 'required|max:100',
         'prodi' => 'required|max:30',
         'angkatan' => 'required|max:4',
+        'foto' => 'image|mimes:jpg,jpeg,png,gif,webp,svg|max:2048',
     ]);
+
+        $fotoPath = null;
+        if($request->hasFile('foto')){
+            $fotoPath = $request->file('foto')->store('photos', 'public');
+        };
 
     $user = User::create([
         'name' => $request->name,
@@ -168,7 +204,7 @@ public function storeMahasiswa(Request $request) {
         'role' => 'mahasiswa',
     ]);
 
-    Mahasiswa::create([
+    $mahasiswa = Mahasiswa::create([
         'user_id' => $user->id,
         'nim' => $request->nim,
         'nama' => $user->name,
@@ -178,6 +214,8 @@ public function storeMahasiswa(Request $request) {
         'alamat' => $request->alamat,
         'prodi' => $request->prodi,
         'angkatan' => $request->angkatan,
+        'foto' => $fotoPath,
+
     ]);
 
     return redirect()->route('admin.dashboard')->with('success', 'Mahasiswa berhasil dibuat');

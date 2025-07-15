@@ -1,10 +1,23 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <x-slot name="header">
         <h2 class="font-semibold text-2xl text-white tracking-wide">Tambah Mahasiswa</h2>
     </x-slot>
 
     <div class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg transform transition-all duration-300">
-        <form id="mahasiswa-form" method="POST" action="{{ route('admin.register.mahasiswa.store') }}" class="space-y-6">
+        @if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <strong>Oops! Ada kesalahan:</strong>
+        <ul class="list-disc list-inside">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+        <form id="mahasiswa-form" method="POST" action="{{ route('admin.register.mahasiswa.store') }}" class="space-y-6" enctype="multipart/form-data">
             @csrf
             <!-- Name Field -->
             <div>
@@ -101,27 +114,34 @@
             </div>
 
             {{-- foto field --}}
-            <div>
+    <div>
+        <label for="foto" class="block text-sm font-medium text-gray-700 mb-1">Foto</label>
+
         <input
             type="file"
             id="foto"
             name="foto"
             accept="image/*"
             class="hidden"
+            onchange="previewFoto(this)"
         >
         <label
             for="foto"
-            class="flex items-center justify-between w-full p-3 bg-white border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 ease-in-out focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 @error('foto') border-red-500 @enderror"
-        >
-            <span class="text-gray-500">Pilih file gambar</span>
-            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V8m0 0l-4 4m4-4l4 4m6-4v8m0 0l4-4m-4 4l-4-4"></path>
+            class="flex items-center justify-between w-full p-3 bg-white border-2 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 ease-in-out {{ $errors->has('foto') ? 'border-red-500' : 'border-gray-300' }}">
+            <span id="foto-name" class="text-gray-500">Pilih file gambar</span>
+            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 16V8m0 0l-4 4m4-4l4 4m6-4v8m0 0l4-4m-4 4l-4-4"></path>
             </svg>
         </label>
         @error('foto')
             <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
         @enderror
-            </div>
+
+        <div id="preview-container" class="mt-2 hidden">
+            <img id="preview-foto" class="h-32 rounded-lg shadow" alt="Preview Foto">
+        </div>
+    </div>
 
             <!-- Password Field -->
             <div>
@@ -165,4 +185,29 @@
             }
         }
     </script>
-</x-app-layout>
+    <!-- Preview Script -->
+<script>
+    function previewFoto(input) {
+        const file = input.files[0];
+        const label = document.getElementById('foto-name');
+        const preview = document.getElementById('preview-foto');
+        const container = document.getElementById('preview-container');
+
+        if (file) {
+            label.textContent = file.name;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                container.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            label.textContent = "Pilih file gambar";
+            preview.src = '';
+            container.classList.add('hidden');
+        }
+    }
+</script>
+
+@endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('register')
+@section('content')
     <div class="max-w-4xl mx-auto mt-12 bg-white p-8 rounded-2xl shadow-xl transition-all duration-300">
         <!-- Header Section -->
         <div class="flex items-center justify-between mb-6">
@@ -27,10 +27,10 @@
 
         <!-- Action Buttons -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            <a href="{{ route('admin.register-user') }}"
+            {{-- <a href="{{ route('admin.register-user') }}"
                class="block text-center bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200">
                 Register User
-            </a>
+            </a> --}}
             <a href="{{ route('admin.register.admin') }}"
                class="block text-center bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200">
                 Tambah Admin

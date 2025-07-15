@@ -19,8 +19,8 @@ class Mahasiswa extends Model
         'jenis_kelamin',
         'alamat',
         'prodi',
-        'angkatan'];
-
+        'angkatan',
+        'foto',];
         public function user(){
             return $this->belongsTo(User::class);
         }
