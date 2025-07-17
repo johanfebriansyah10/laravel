@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.mahasiswa')
 
-@section('content')
+@section('mahasiswa.content')
 <div class="max-w-3xl mx-auto mt-10 bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl shadow-2xl">
     <div class="flex flex-col items-center">
         <div class="mb-4">

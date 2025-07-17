@@ -61,14 +61,58 @@
                 >
                     Admin
                 </a>
-                {{-- <a
-                    href="{{ route('admin.register-user') }}"
-                    class="block px-4 py-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200"
-                >
-                    Users
-                </a> --}}
                 <a
                     href="{{ route('admin.register.dosen') }}"
+                    class="block px-4 py-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200"
+                >
+                    Dosen
+                </a>
+            </div>
+        </div>
+
+        <div x-data="{ open: false }">
+            <button
+                @click="open = !open"
+                class="flex items-center w-full px-4 py-3 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 group"
+            >
+                <svg class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                </svg>
+                Data
+                <svg
+                    class="w-4 h-4 ml-auto transform transition-transform duration-200"
+                    :class="{ 'rotate-180': open }"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div
+                x-show="open"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 transform -translate-y-2"
+                x-transition:enter-end="opacity-100 transform translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 transform translate-y-0"
+                x-transition:leave-end="opacity-0 transform -translate-y-2"
+                class="ml-8 mt-2 space-y-2"
+            >
+                <a
+                    href="{{ route('mahasiswa.index') }}"
+                    class="block px-4 py-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200"
+                >
+                    Mahasiswa
+                </a>
+                <a
+                    href=""
+                    class="block px-4 py-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200"
+                >
+                    Admin
+                </a>
+                <a
+                    href="{{ route('dosen.index') }}"
                     class="block px-4 py-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200"
                 >
                     Dosen

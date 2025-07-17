@@ -27,13 +27,13 @@
             <!-- Main Grid Container -->
             <div class="flex-1 grid grid-cols-12 gap-4">
                 <!-- Sidebar (3 columns) -->
-                <aside class="col-span-2">
-                    @include('components.sidebar')
+                <aside class="col-span-3">
+                    @include('components.mahasiswa-sidebar')
                 </aside>
 
                 <!-- Main Content (9 columns, centered) -->
-                <main class="col-span-10 py-10 px-4" data-aos="fade-up">
-                    <div class="w-full max-w-7xl" data-aos="zoom-in" data-aos-delay="200">
+                <main class="col-span-9 py-10 px-4" data-aos="fade-up">
+                    <div class="w-full max-w-5xl" data-aos="zoom-in" data-aos-delay="200">
                         @isset($header)
                             <header class="bg-white dark:bg-gray-800 shadow mb-6">
                                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -42,7 +42,7 @@
                             </header>
                         @endisset
 
-                        @yield('content')
+                        @yield('mahasiswa.content')
                     </div>
                 </main>
             </div>

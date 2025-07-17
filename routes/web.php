@@ -31,8 +31,6 @@ Route::middleware(['auth'])->group(function (){
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function (){
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    // Route::get('/register-user', [RegisteredUserController::class, 'create'])->name('admin.register-user');
-    // Route::post('/register-user', [RegisteredUserController::class, 'store'])->name('admin.register.store');
     Route::get('/register-user', [AdminController::class, 'createUser'])->name('admin.register-user');
     Route::post('/register-user', [AdminController::class, 'storeUser'])->name('admin.store-user');
 
@@ -44,6 +42,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function (){
 
     Route::get('/register-mahasiswa', [AdminController::class, 'showMahasiswaForm'])->name('admin.register.mahasiswa');
     Route::post('/register-mahasiswa', [AdminController::class, 'storeMahasiswa'])->name('admin.register.mahasiswa.store');
+
+    Route::resource('mahasiswa', \App\Http\Controllers\Admin\MahasiswaController::class);
+    Route::resource('dosen', \App\Http\Controllers\Admin\DosenController::class);
+
 });
 
 Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->group(function (){
